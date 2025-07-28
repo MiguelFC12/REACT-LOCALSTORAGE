@@ -1,0 +1,145 @@
+/* Contenedor principal de la página de detalles del curso */
+.curso-detalle-container {
+    max-width: 900px;
+    margin: 40px auto; /* Centra el contenedor y le da margen vertical */
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Sombra sutil para profundidad */
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+.curso-detalle-container h1 {
+    font-size: 2.5em;
+    color: #0056b3; /* Un azul corporativo */
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 2px solid #eee; /* Línea separadora */
+    padding-bottom: 15px;
+}
+
+.curso-meta {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+    gap: 20px; /* Espacio entre los elementos de metadatos */
+    margin-bottom: 30px;
+    justify-content: center; /* Centra los metadatos */
+    font-size: 1.1em;
+    color: #555;
+}
+
+.curso-meta span {
+    display: flex;
+    align-items: center; /* Alinea icono y texto */
+    gap: 8px; /* Espacio entre icono y texto */
+}
+
+.curso-meta i {
+    color: #007bff; /* Color para los iconos de metadatos */
+    font-size: 1.2em;
+}
+
+.curso-descripcion-corta {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #666;
+    font-style: italic; /* La descripción corta en cursiva */
+}
+
+.curso-contenido-completo {
+    background-color: #f9f9f9; /* Un fondo ligeramente gris para el contenido */
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    line-height: 1.7;
+    color: #444;
+    font-size: 1.1em;
+}
+
+/* Estilos para elementos HTML dentro de curso-contenido-completo */
+.curso-contenido-completo p,
+.curso-contenido-completo ul,
+.curso-contenido-completo ol {
+    margin-bottom: 1em; /* Espacio entre párrafos y listas */
+}
+
+.curso-contenido-completo h2,
+.curso-contenido-completo h3 {
+    color: #0056b3;
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    font-size: 1.8em;
+}
+
+.curso-contenido-completo a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.curso-contenido-completo a:hover {
+    text-decoration: underline;
+}
+
+.back-button {
+    background-color: #6c757d; /* Gris para el botón de volver */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #5a6268;
+}
+
+.error-message {
+    color: #dc3545; /* Rojo para mensajes de error */
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.btn-ir-plataforma { /* Estilo opcional si usas el botón para ir a plataforma externa */
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #28a745; /* Verde para el botón de ir a plataforma */
+    color: white;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 30px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-ir-plataforma:hover {
+    background-color: #218838;
+}
+
+/* Responsividad básica */
+@media (max-width: 768px) {
+    .curso-detalle-container {
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    .curso-detalle-container h1 {
+        font-size: 2em;
+    }
+
+    .curso-meta {
+        flex-direction: column; /* Apila los metadatos en pantallas pequeñas */
+        align-items: flex-start;
+    }
+}

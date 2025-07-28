@@ -1,0 +1,1217 @@
+/* src/CSS/UserInterface.css - VERSIÓN CORREGIDA FINAL Y AMPLIADA */
+
+/* ============================================== */
+/* --- VARIABLES CSS GLOBALES DEL USUARIO --- */
+/* ============================================== */
+:root {
+    --primary-color: #004080; /* Azul oscuro ULEAM */
+    --secondary-color: #007bff; /* Azul brillante */
+    --accent-color: #ffc107; /* Amarillo */
+    --background-light: #f8f9fa; /* Gris muy claro */
+    --background-dark: #343a40; /* Gris oscuro */
+    --text-color-dark: #212529; /* Texto oscuro */
+    --text-color-light: #ffffff; /* Texto claro */
+    --border-color: #dee2e6; /* Borde gris */
+    --card-background: #ffffff; /* Fondo de tarjeta blanco */
+    --shadow-color: rgba(0, 0, 0, 0.1); /* Sombra suave */
+    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.05); /* Sombra más ligera */
+
+    /* Colores específicos para ULEAM y Capacitaciones */
+    --uleam-blue-dark: #004080;
+    --uleam-blue-light: #007bff;
+    --uleam-yellow: #ffc107;
+    --background-light-grey: #f0f2f5;
+    
+    --obligatorio-color: #dc3545; /* Rojo */
+    --opcional-color: #28a745; /* Verde */
+    --inscrito-color: #6c757d; /* Gris */
+    --announcement-color: #ff6f00; /* Naranja para anuncios/avisos */
+    --button-green: #28a745;
+    --gray-medium: #6c757d;
+
+    /* Nuevas variables para certificados, si quieres personalizarlas aún más */
+    --certificado-card-bg: #ffffff;
+    --certificado-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    --certificado-hover-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+    --certificado-icon-color: #007bff; /* Azul vibrante para iconos de título */
+    --certificado-button-bg: #28a745; /* Verde para botón de certificado */
+    --certificado-button-hover-bg: #218838;
+    --certificado-placeholder-border: #b0c4de; /* Azul grisáceo para borde de placeholder */
+    --certificado-placeholder-icon: #b0c4de;
+    --certificado-placeholder-bg: #e9ecef;
+}
+
+/* ============================================== */
+/* --- ESTILOS BASE Y RESET --- */
+/* ============================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+/* ============================================== */
+/* --- LAYOUT PRINCIPAL DEL DASHBOARD DE USUARIO --- */
+/* ============================================== */
+
+/* **MODIFICACIÓN CRÍTICA**: Usar `position: fixed` para el contenedor principal
+    como lo haces en el admin dashboard. Esto contendrá todo el layout y controlará el scroll. */
+.user-dashboard-container {
+    position: fixed; /* Ocupa todo el viewport */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100; /* Asegura que esté por encima de otros elementos si los hay */
+    display: flex;
+    flex-direction: column; /* Header arriba, contenido abajo */
+    overflow: hidden; /* **MUY IMPORTANTE**: Controla el overflow general, el scroll será interno */
+    background-color: var(--background-light-grey);
+    color: var(--text-color-dark);
+    line-height: 1.6;
+}
+
+/* El body ya no necesita ser un flex container ni tener min-height 100vh
+    porque .user-dashboard-container ya se encarga de eso. */
+body {
+    background-color: var(--background-light-grey); /* Fondo por defecto */
+    color: var(--text-color-dark);
+    line-height: 1.6;
+    /* Eliminado display: flex, flex-direction: column, min-height: 100vh de aquí */
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Para prevenir cualquier scroll externo no deseado */
+}
+
+
+/* --- Header (Parte Superior) --- */
+.main-header-top {
+    background-color: var(--uleam-blue-dark);
+    color: var(--text-color-light);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1000;
+    flex-shrink: 0; /* Asegura que el header no se encoja */
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-logo {
+    height: 40px;
+    filter: brightness(0) invert(1);
+    margin-right: 10px;
+}
+
+.uleam-text {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--text-color-light);
+}
+
+.main-nav {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.main-nav .nav-link {
+    color: var(--text-color-light);
+    text-decoration: none;
+    font-size: 1.1em;
+    padding: 5px 0;
+    position: relative;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.main-nav .nav-link i {
+    margin-right: 8px;
+}
+
+.main-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background-color: var(--uleam-yellow);
+    left: 0;
+    bottom: -8px;
+    transition: width 0.3s ease;
+}
+
+.main-nav .nav-link:hover::after,
+.main-nav .nav-link.active::after {
+    width: 100%;
+}
+
+.main-nav .nav-link.active {
+    color: var(--uleam-yellow);
+}
+
+.header-right {
+    position: relative;
+    margin-left: auto;
+}
+
+.user-profile-icon {
+    width: 45px;
+    height: 45px;
+    background-color: transparent;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    font-size: 2.5em;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    box-shadow: none;
+    border: none;
+    padding-left: 5px;
+}
+.user-profile-icon .user-name {
+    font-size: 0.5em;
+    margin-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-profile-icon:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    background-color: var(--card-background);
+    box-shadow: var(--shadow-light);
+    border-radius: 8px;
+    overflow: hidden;
+    min-width: 160px;
+    z-index: 1000;
+    display: none;
+}
+
+.user-dropdown.show {
+    display: block;
+}
+
+.user-dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-dropdown li a {
+    display: block;
+    padding: 10px 15px;
+    color: var(--text-color-dark);
+    text-decoration: none;
+    font-size: 0.95em;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.user-dropdown li a:hover {
+    background-color: var(--background-light-grey);
+}
+
+.user-dropdown li a i {
+    margin-right: 10px;
+    color: var(--uleam-blue-light);
+}
+
+/* --- Área de contenido principal del Dashboard (para Outlet) --- */
+.main-content-area {
+    padding: 20px 30px;
+    flex-grow: 1; /* Permite que esta área crezca y ocupe el espacio restante */
+    overflow-y: auto; /* **CRÍTICO**: Habilita el scroll vertical si el contenido de esta área desborda */
+    min-height: 0; /* **CRÍTICO**: Necesario para que flex-grow funcione correctamente con overflow-y: auto */
+    /* background-color: var(--background-light-grey); */ /* Se puede quitar si el fondo ya está en user-dashboard-container */
+}
+
+/* --- SECCIÓN DE ANUNCIOS Y NOVEDADES (UserAnuncios.jsx) --- */
+.section-novedades {
+    margin-top: 20px;
+}
+
+.section-novedades h2 {
+    font-size: 1.8em;
+    color: var(--uleam-blue-dark);
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+}
+
+.section-novedades h2 i {
+    margin-right: 10px;
+    color: var(--announcement-color);
+}
+
+.novedades-container {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    box-shadow: var(--shadow-light);
+    padding: 30px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%; /* Asegura que ocupe el 100% del ancho disponible de su padre */
+    
+    /* Si deseas que el CONTENEDOR general de novedades tenga un límite de ancho y se centre, descomenta estas líneas: */
+    /* max-width: 1000px; */ 
+    /* margin: 0 auto; */
+}
+
+.no-novedades-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 1.1em;
+    width: 100%;
+}
+
+.no-novedades-placeholder i {
+    font-size: 3em;
+    margin-bottom: 10px;
+    color: var(--announcement-color);
+}
+
+.no-novedades-placeholder p {
+    margin: 0;
+    font-style: normal;
+    color: var(--text-color-dark);
+    font-size: 1.2em;
+    line-height: 1.4;
+}
+
+.novedad-card {
+    background-color: var(--background-light-grey);
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    text-align: left;
+    transition: transform 0.2s ease;
+    width: 100%;
+    /* Mantengo este `max-width` comentado aquí, por si cada tarjeta individual sí necesita un límite,
+        pero la eliminación del `max-width` en `.novedades-container` es la clave. */
+    /* max-width: 900px; */
+}
+
+.novedad-card:hover {
+    transform: translateY(-3px);
+}
+
+.novedad-card h3 {
+    color: var(--uleam-blue-light);
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.novedad-card p {
+    color: var(--text-color-dark);
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+.announcement-date {
+    display: block;
+    font-size: 0.9em;
+    color: var(--gray-medium);
+    margin-top: 10px;
+}
+
+/* --- Footer --- */
+.site-footer {
+    background-color: var(--uleam-blue-dark);
+    color: var(--text-color-light);
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9em;
+    margin-top: auto; /* Empuja el footer hacia abajo en un flex column */
+    flex-shrink: 0; /* Asegura que el footer no se encoja */
+    width: 100%;
+}
+.site-footer p {
+    margin: 5px 0;
+}
+
+/* --- Estilos Generales para el Contenido Principal de Capacitaciones (Capacitacion.jsx) --- */
+.main-content-capacitaciones {
+    padding: 30px 20px;
+    background-color: var(--background-light-grey);
+    /* min-height: calc(100vh - 80px); /* Ajusta según la altura de tu header/footer, esto podría ser redundante si flex-grow 1 funciona bien */
+    font-family: 'Arial', sans-serif;
+    color: var(--text-color-dark);
+    flex-grow: 1; /* Asegura que el contenido de capacitaciones se expanda */
+    overflow-y: auto; /* Permite el scroll interno si solo este contenido es muy largo */
+}
+
+.capacitaciones-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.capacitaciones-header h1 {
+    color: var(--uleam-blue-dark);
+    font-size: 2.8em;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.capacitaciones-header h1::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: var(--uleam-blue-light);
+    border-radius: 2px;
+}
+
+/* Botones de Filtro */
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.filter-button {
+    background-color: var(--card-background);
+    color: var(--uleam-blue-dark);
+    border: 2px solid var(--uleam-blue-light);
+    padding: 12px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.filter-button:hover {
+    background-color: var(--uleam-blue-light);
+    color: var(--text-color-light);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.filter-button.active {
+    background-color: var(--uleam-blue-dark);
+    color: var(--text-color-light);
+    border-color: var(--uleam-blue-dark);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(0);
+}
+
+/* Leyenda de Colores */
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    color: var(--text-color-dark);
+}
+
+.legend-item span {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.legend-color-obligatorio { background-color: var(--obligatorio-color); }
+.legend-color-opcional { background-color: var(--opcional-color); }
+.legend-color-inscrito { background-color: var(--inscrito-color); }
+
+/* Lista de Capacitaciones */
+.capacitaciones-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    /* Eliminado max-width y margin: 0 auto; para que ocupe todo el ancho disponible */
+}
+
+/* Tarjeta de Capacitación */
+.capacitacion-card {
+    background-color: var(--card-background);
+    border-radius: 15px;
+    box-shadow: 0 6px 15px var(--shadow-color);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 8px solid; /* Borde para indicar el tipo */
+}
+
+.capacitacion-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Colores del borde de la tarjeta según el tipo */
+.capacitacion-card.obligatorio { border-left-color: var(--obligatorio-color); }
+.capacitacion-card.opcional { border-left-color: var(--opcional-color); }
+.capacitacion-card.inscrito { border-left-color: var(--inscrito-color); }
+
+.card-details {
+    padding: 25px;
+    flex-grow: 1;
+}
+
+.card-details h3 {
+    color: var(--uleam-blue-dark);
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+.card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+    font-size: 0.95em;
+    color: #555;
+}
+
+.card-meta span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-meta i {
+    color: var(--uleam-blue-light);
+    font-size: 1.1em;
+}
+
+.card-details p {
+    font-size: 1em;
+    line-height: 1.6;
+    color: var(--text-color-dark);
+}
+
+.card-actions {
+    padding: 20px 25px;
+    background-color: var(--background-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+}
+
+.card-tag { /* Mantengo la definición de card-tag, aunque ya no se esté usando en el JSX */
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9em;
+    color: var(--text-color-light);
+    text-transform: uppercase;
+}
+
+.obligatorio-tag { background-color: var(--obligatorio-color); } /* Mantengo por si acaso se vuelve a usar */
+.opcional-tag { background-color: var(--opcional-color); } /* Mantengo por si acaso se vuelve a usar */
+.inscrito-tag { background-color: var(--inscrito-color); } /* Mantengo por si acaso se vuelve a usar */
+
+.action-button {
+    background-color: var(--uleam-blue-light);
+    color: var(--text-color-light);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.action-button:hover {
+    background-color: var(--uleam-blue-dark);
+    transform: translateY(-2px);
+}
+
+.action-button.details {
+    background-color: var(--secondary-color);
+}
+
+.action-button.details:hover {
+    background-color: #0056b3;
+}
+
+.action-button.inscribirme {
+    background-color: var(--opcional-color);
+}
+
+.action-button.inscribirme:hover {
+    background-color: #218838;
+}
+
+/* NUEVO ESTILO PARA EL BOTÓN "IR AL CURSO" */
+.action-button.go-to-course {
+    background-color: var(--uleam-blue-dark); /* Un azul más oscuro que el de detalles, o el principal */
+    color: var(--text-color-light);
+}
+
+.action-button.go-to-course:hover {
+    background-color: #002c5f; /* Un tono aún más oscuro al pasar el ratón */
+    transform: translateY(-2px);
+}
+/* FIN NUEVO ESTILO */
+
+
+.action-button.inscrito-desinscribir { /* Renombrado para mayor claridad, aunque su funcionalidad de 'disabled' es clave */
+    background-color: var(--inscrito-color);
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+/* Aseguramos que el botón de inscrito también tenga un hover diferente o nulo si es disabled */
+.action-button.inscrito-desinscribir:hover:disabled {
+    background-color: var(--inscrito-color); /* No cambia color si está deshabilitado */
+    transform: translateY(0); /* No hay efecto de elevación si está deshabilitado */
+}
+/* Si quieres que tenga un hover visual aunque esté deshabilitado, pero sin acción: */
+.action-button.inscrito-desinscribir:hover:not(:disabled) {
+      background-color: #5a6268; /* Un gris un poco más oscuro si es opcional y se puede desinscribir */
+}
+
+
+/* Placeholder para cuando no hay capacitaciones */
+.no-capacitaciones-placeholder {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px;
+    background-color: var(--card-background);
+    border-radius: 15px;
+    box-shadow: 0 6px 15px var(--shadow-color);
+    color: #888;
+    font-size: 1.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.no-capacitaciones-placeholder i {
+    font-size: 4em;
+    color: var(--uleam-blue-light);
+}
+
+/* ============================================== */
+/* --- ESTILOS DE CERTIFICADOS (UserCertificados.jsx) --- */
+/* ============================================== */
+.main-content-certificados {
+    padding: 20px 30px; /* Asegura un buen padding lateral */
+    background-color: var(--background-light-grey);
+    flex-grow: 1; /* Permite que ocupe el espacio disponible */
+    overflow-y: auto; /* Permite scroll si hay muchos certificados */
+    min-height: calc(100vh - 80px); /* Ajusta si tu header/footer tienen diferente altura */
+}
+
+.certificados-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px; /* Espacio debajo del título */
+    color: var(--uleam-blue-dark);
+}
+
+.certificados-header h1 {
+    font-size: 1.8em; /* Tamaño del título principal */
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.certificados-header h1 .fas {
+    margin-right: 10px;
+    color: var(--uleam-yellow);
+    font-size: 1em; /* Tamaño del ícono del header */
+}
+
+.certificados-list {
+    display: grid;
+    /* CLAVE PARA MÚLTIPLES COLUMNAS: */
+    /* Usamos 'auto-fit' para que se adapte al número de columnas según el ancho. */
+    /* Minmax(250px, 1fr): Cada columna tendrá al menos 250px, y se expandirá uniformemente si hay espacio. */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 20px; /* Espacio entre las tarjetas */
+    justify-content: center; /* Centra las tarjetas si no llenan todo el ancho disponible */
+    align-items: stretch; /* Hace que todas las tarjetas en la fila tengan la misma altura */
+}
+
+.certificado-card {
+    background-color: var(--card-background);
+    border-radius: 8px; /* Borde más suave */
+    box-shadow: var(--shadow-light);
+    padding: 20px; /* Padding interno adecuado para el contenido */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    height: auto; /* Asegura que la altura se ajuste al contenido */
+}
+
+.certificado-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.certificate-icon {
+    font-size: 2.5em; /* Tamaño grande para el ícono central, ajustado */
+    color: var(--uleam-yellow);
+    margin-bottom: 15px;
+}
+
+.card-details {
+    flex-grow: 1; /* Permite que este div ocupe el espacio disponible */
+    margin-bottom: 15px; /* Espacio entre detalles y el botón */
+}
+
+.card-details h3 {
+    font-size: 1.1em; /* Título del certificado más compacto */
+    color: var(--uleam-blue-dark);
+    margin-top: 0;
+    margin-bottom: 8px;
+    line-height: 1.3; /* Espaciado entre líneas del título */
+}
+
+.card-details p {
+    font-size: 0.85em; /* Texto de emisión más pequeño */
+    color: var(--text-color-dark);
+    margin-bottom: 10px;
+}
+
+.card-meta {
+    font-size: 0.8em; /* Meta info (fecha, modalidad) más pequeña */
+    color: #777;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px; /* Menor espacio entre elementos meta */
+    margin-bottom: 10px;
+}
+
+.card-meta span {
+    display: flex;
+    align-items: center;
+}
+
+.card-meta .fas, .card-meta .far {
+    margin-right: 4px;
+    color: var(--uleam-blue-light);
+    font-size: 0.9em; /* Íconos meta un poco más pequeños */
+}
+
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75em; /* Tamaño del texto del badge */
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px; /* Espacio si el badge va aparte */
+}
+
+.status-badge.assisted {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-badge .fas {
+    margin-right: 5px;
+}
+
+.card-actions {
+    margin-top: auto; /* Empuja el botón hacia abajo, asegurando que esté en la parte inferior */
+}
+
+.download-pdf-btn, .view-certificate-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 18px; /* Tamaño del botón */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.95em; /* Tamaño del texto del botón */
+    transition: background-color 0.3s ease;
+    width: 100%; /* El botón ocupa todo el ancho de la tarjeta */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.download-pdf-btn:hover, .view-certificate-btn:hover {
+    background-color: #0056b3;
+}
+
+.download-pdf-btn .fas, .view-certificate-btn .fas {
+    margin-right: 8px;
+}
+
+/* Placeholder para cuando no hay certificados (ajustado al nuevo estilo) */
+.no-certificados-placeholder {
+    grid-column: 1 / -1; /* Ocupa todo el ancho en el grid */
+    text-align: center;
+    padding: 50px 25px; /* Padding ajustado */
+    color: var(--gray-medium);
+    font-size: 1.1em; /* Tamaño del texto del placeholder */
+    background-color: var(--certificado-placeholder-bg);
+    border-radius: 10px;
+    border: 2px dashed var(--certificado-placeholder-border);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.no-certificados-placeholder i {
+    font-size: 4em; /* Tamaño del ícono del placeholder */
+    color: var(--certificado-placeholder-icon);
+    margin-bottom: 0;
+}
+
+.no-certificados-placeholder p {
+    margin-bottom: 0;
+    line-height: 1.5;
+    color: var(--text-color-dark);
+}
+
+/* --- Estilos para Mensajes de Error/Advertencia --- */
+.error-message {
+    color: var(--obligatorio-color); /* Rojo para errores */
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 15px;
+    background-color: #ffebe8; /* Fondo suave para el error */
+    border: 1px solid var(--obligatorio-color);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    grid-column: 1 / -1; 
+}
+
+.no-url-message {
+    color: var(--accent-color); /* Amarillo/naranja para advertencias */
+    font-style: italic;
+    font-size: 0.95em;
+    margin-top: 10px; 
+}
+
+/* --- SECCIÓN DE PERFIL DE USUARIO (UserPerfil.jsx) --- */
+.section-perfil {
+    margin-top: 20px;
+}
+
+.section-perfil h2 {
+    font-size: 1.8em;
+    color: var(--uleam-blue-dark);
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+}
+
+.section-perfil h2 i {
+    margin-right: 10px;
+    color: var(--uleam-blue-light);
+}
+
+.perfil-info-container {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    box-shadow: var(--shadow-light);
+    padding: 30px;
+    min-height: 150px;
+    width: 100%; /* Ocupa el 100% del ancho disponible de su padre */
+    text-align: left; /* El texto del perfil suele estar alineado a la izquierda */
+
+    /* Eliminado max-width y margin: 0 auto; para que ocupe todo el ancho disponible */
+}
+
+.perfil-info-container p {
+    font-size: 1.1em;
+    line-height: 1.8;
+    margin-bottom: 10px;
+    color: var(--text-color-dark);
+}
+
+
+/* ============================================== */
+/* --- ESTILOS DE MODALES (COMUNES) --- */
+/* ============================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--card-background);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 700px; /* Aquí un max-width es apropiado para el modal */
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: fadeInScale 0.3s ease-out;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-content h2 {
+    color: var(--uleam-blue-dark);
+    font-size: 2em;
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.modal-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 1em;
+}
+
+.modal-meta span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modal-meta i {
+    color: var(--uleam-blue-light);
+}
+
+.modal-content p {
+    font-size: 1.05em;
+    line-height: 1.7;
+    margin-bottom: 15px;
+    color: var(--text-color-dark);
+}
+
+.full-content-display {
+    background-color: var(--background-light-grey);
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    line-height: 1.8;
+    color: #444;
+}
+
+/* Estilos para el contenido HTML dentro del modal (listas, enlaces, etc.) */
+.full-content-display h3 {
+    color: var(--uleam-blue-dark);
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.4em;
+}
+.full-content-display ul {
+    list-style: disc;
+    margin-left: 25px;
+    margin-bottom: 15px;
+}
+.full-content-display ul li {
+    margin-bottom: 8px;
+}
+.full-content-display ul ul {
+    list-style: circle;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+.full-content-display a {
+    color: var(--uleam-blue-light);
+    text-decoration: none;
+    font-weight: bold;
+}
+.full-content-display a:hover {
+    text-decoration: underline;
+}
+
+.modal-close-button {
+    background-color: var(--announcement-color);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 25px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modal-close-button:hover {
+    background-color: #c7471d;
+    transform: translateY(-1px);
+}
+
+/* ============================================== */
+/* --- MEDIA QUERIES (Responsive Design del Dashboard General) --- */
+/* ============================================== */
+@media (max-width: 768px) {
+    .main-header-top {
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+    }
+    .header-left {
+        margin-bottom: 15px;
+        width: 100%;
+        justify-content: center;
+    }
+    .main-nav {
+        order: 3;
+        width: 100%;
+        margin-top: 15px;
+    }
+    .main-nav ul {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        width: 100%;
+    }
+    .main-nav .nav-link {
+        padding: 10px 0;
+        justify-content: center;
+    }
+    .header-right {
+        order: 2;
+        margin-top: 0;
+        width: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .main-content-area {
+        padding: 15px;
+    }
+    .section-novedades h2, .section-perfil h2,
+    .capacitaciones-header h1 { 
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        text-align: center;
+        justify-content: center;
+    }
+    .novedades-container, .certificados-container, .perfil-info-container {
+        padding: 20px;
+    }
+    .novedad-card {
+        padding: 12px 15px;
+    }
+    /* Media queries para responsividad de Capacitaciones (duplicadas y movidas aquí para consolidar) */
+    .main-content-capacitaciones {
+        padding: 20px 15px;
+    }
+    .filter-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    .filter-button {
+        width: 80%;
+        max-width: 250px;
+    }
+    .capacitaciones-list {
+        grid-template-columns: 1fr;
+    }
+    .card-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .action-button {
+        width: 100%;
+        justify-content: center;
+    }
+    /* Modales responsivos */
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+    .modal-content h2 {
+        font-size: 1.5em;
+    }
+    .modal-meta {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .full-content-display {
+        padding: 15px;
+    }
+
+    /* Media Queries Específicas para Certificados en 768px */
+    .main-content-certificados { 
+        padding: 15px; 
+    }
+    .certificados-header h1 {
+        font-size: 1.5em; 
+        margin-bottom: 20px;
+    }
+    .certificados-list {
+        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+        gap: 15px;
+    }
+    .certificado-card {
+        padding: 15px;
+    }
+    .certificado-card h3 {
+        font-size: 1.2em;
+    }
+    .download-pdf-btn, .view-certificate-btn {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+    .no-certificados-placeholder {
+        font-size: 1.1em;
+        padding: 40px 20px;
+    }
+    .no-certificados-placeholder i {
+        font-size: 4em;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-logo {
+        height: 35px;
+    }
+    .uleam-text {
+        font-size: 1.3em;
+    }
+    .user-profile-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 2em;
+    }
+    .main-nav .nav-link {
+        font-size: 1em;
+    }
+    .section-novedades h2, .section-perfil h2,
+    .capacitaciones-header h1 { 
+        font-size: 1.2em;
+    }
+    .novedades-container, .certificados-container, .perfil-info-container {
+        padding: 15px;
+    }
+    .novedad-card {
+        padding: 12px 15px;
+    }
+
+    /* Media Queries Específicas para Certificados en 480px */
+    .main-content-certificados { 
+        padding: 10px; 
+    }
+    .certificados-header h1 {
+        font-size: 1.5em; 
+        margin-bottom: 20px;
+    }
+    .certificados-list {
+        grid-template-columns: 1fr; /* Una columna en pantallas muy pequeñas */
+        gap: 10px; 
+    }
+    .certificado-card {
+        padding: 12px; 
+    }
+    .certificado-card h3 {
+        font-size: 1.1em; 
+    }
+    .certificate-icon {
+        font-size: 2em; 
+    }
+    .card-details p {
+        font-size: 0.8em;
+    }
+    .card-meta {
+        font-size: 0.7em;
+    }
+    .status-badge {
+        font-size: 0.7em;
+    }
+    .download-pdf-btn, .view-certificate-btn {
+        padding: 8px 12px;
+        font-size: 0.85em;
+    }
+    .no-certificados-placeholder {
+        font-size: 0.9em;
+        padding: 20px 15px;
+    }
+    .no-certificados-placeholder i {
+        font-size: 3em;
+    }
+}
